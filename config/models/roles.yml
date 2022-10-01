@@ -4,11 +4,6 @@ default:
     Membership:
       - read
       - search
-    Platform::Application: read
-    Webhooks::Outgoing::Endpoint: manage
-    Webhooks::Outgoing::Event: read
-    Webhooks::Outgoing::Delivery: read
-    Webhooks::Outgoing::DeliveryAttempt: read
     Invitation:
       - read
       - create
