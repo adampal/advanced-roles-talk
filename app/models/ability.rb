@@ -11,6 +11,8 @@ class Ability
 
       # permit is a Bullet Train created "magic" method. It parses all the roles in `config/roles.yml` and automatically inserts the appropriate `can` method calls here
       permit user, through: :memberships, parent: :team
+      permit user, through: :campaigns_collaborators, parent: :campaign
+      permit user, through: :clients, parent: :client_team
 
       # INDIVIDUAL USER PERMISSIONS.
       can :manage, User, id: user.id

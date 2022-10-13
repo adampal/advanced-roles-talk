@@ -1,0 +1,36 @@
+<%= render 'account/shared/page' do |p| %>
+  <% p.content_for :title, t('.section') %>
+  <% p.content_for :body do %>
+    <%= updates_for @client do %>
+      <%= render 'account/shared/box', divider: true do |p| %>
+        <% p.content_for :title, t('.header') %>
+        <% p.content_for :description do %>
+          <%= t('.description') %>
+          <%= t('.manage_description') if can? :manage, @client %>
+        <% end %>
+
+        <% p.content_for :body do %>
+          <% with_attribute_settings object: @client, strategy: :label do %>
+            <%= render 'shared/attributes/belongs_to', attribute: :team %>
+            <%= render 'shared/attributes/belongs_to', attribute: :client_team %>
+            <%# 🚅 super scaffolding will insert new fields above this line. %>
+          <% end %>
+        <% end %>
+
+        <% p.content_for :actions do %>
+          <%= link_to t('.buttons.edit'), [:edit, :account, @client], class: first_button_primary if can? :edit, @client %>
+          <%# 🚅 super scaffolding will insert new action model buttons above this line. %>
+          <%= button_to t('.buttons.destroy'), [:account, @client], method: :delete, class: first_button_primary, data: { confirm: t('.buttons.confirmations.destroy', model_locales(@client)) } if can? :destroy, @client %>
+          <%= link_to t('global.buttons.back'), [:account, @team, :clients], class: first_button_primary %>
+        <% end %>
+
+        <% p.content_for :raw_footer do %>
+          <%# 🚅 super scaffolding will insert new action model index views above this line. %>
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <%= render 'account/campaigns/index', campaigns: @client.client_team.campaigns %>
+    <%# 🚅 super scaffolding will insert new children above this line. %>
+  <% end %>
+<% end %>

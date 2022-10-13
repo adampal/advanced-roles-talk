@@ -30,6 +30,18 @@ shallow do
       namespace :integrations do
         # 🚅 super scaffolding will insert new integration installations above this line.
       end
+
+      resources :campaigns do
+        scope module: 'campaigns' do
+          resources :collaborators, only: collection_actions
+        end
+      end
+      resources :payments
+      namespace :campaigns do
+        resources :collaborators, except: collection_actions
+      end
+
+      resources :clients
     end
   end
 end

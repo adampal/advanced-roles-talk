@@ -1,0 +1,93 @@
+/campaigns/{campaign_id}/collaborators:
+  get:
+    tags:
+      - "Campaigns/Collaborators"
+    summary: "List Collaborators"
+    operationId: listCampaignsCollaborators
+    parameters:
+      - name: campaign_id
+        in: path
+        required: true
+        schema:
+          type: string
+    responses:
+      "404":
+        description: "Not Found"
+      "200":
+        description: "OK"
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: array
+                  items: 
+                    $ref: "#/components/schemas/Campaigns::Collaborator::Attributes"
+                has_more:
+                  type: boolean
+  post:
+    tags:
+      - "Campaigns/Collaborators"
+    summary: "Create Collaborator"
+    operationId: createCampaignsCollaborators
+    parameters:
+      - name: campaign_id
+        in: path
+        required: true
+        schema:
+          type: string
+    responses:
+      "404":
+        description: "Not Found"
+      "201":
+        description: "Created"
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Campaigns::Collaborator::Parameters"
+/campaigns/collaborators/{id}:
+  get:
+    tags:
+      - "Campaigns/Collaborators"
+    summary: "Fetch Collaborator"
+    operationId: getCampaignsCollaborators
+    parameters:
+      - $ref: "#/components/parameters/id"
+    responses:
+      "404":
+        description: "Not Found"
+      "200":
+        description: "OK"
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Campaigns::Collaborator::Attributes"
+  put:
+    tags:
+      - "Campaigns/Collaborators"
+    summary: "Update Collaborator"
+    operationId: updateCampaignsCollaborators
+    parameters:
+      - $ref: "#/components/parameters/id"
+    responses:
+      "404":
+        description: "Not Found"
+      "200":
+        description: "OK"
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Campaigns::Collaborator::Parameters"
+  delete:
+    tags:
+      - "Campaigns/Collaborators"
+    summary: "Remove Collaborator"
+    operationId: removeCampaignsCollaborators
+    parameters:
+      - $ref: "#/components/parameters/id"
+    responses:
+      "404":
+        description: "Not Found"
+      "200":
+        description: "OK"

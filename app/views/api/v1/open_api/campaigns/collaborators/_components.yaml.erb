@@ -1,0 +1,18 @@
+Campaigns::Collaborator::Attributes:
+  type: object
+  properties:
+    <%= attribute :id %>
+    <%= attribute :campaign_id %>
+    <%= attribute :user_id %>
+    <%= attribute :role_ids %>
+    <%# 🚅 super scaffolding will insert new attributes above this line. %>
+    <%= attribute :created_at %>
+    <%= attribute :updated_at %>
+
+Campaigns::Collaborator::Parameters:
+  type: object
+  properties:
+    <%= parameter :campaign_id %>
+    <%= parameter :user_id %>
+    <%= parameter :role_ids %>
+    <%# 🚅 super scaffolding will insert new parameter above this line. %>

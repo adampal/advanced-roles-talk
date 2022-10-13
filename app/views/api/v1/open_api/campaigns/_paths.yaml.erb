@@ -1,0 +1,93 @@
+/teams/{team_id}/campaigns:
+  get:
+    tags:
+      - "Campaigns"
+    summary: "List Campaigns"
+    operationId: listCampaigns
+    parameters:
+      - name: team_id
+        in: path
+        required: true
+        schema:
+          type: string
+    responses:
+      "404":
+        description: "Not Found"
+      "200":
+        description: "OK"
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: array
+                  items: 
+                    $ref: "#/components/schemas/Campaign::Attributes"
+                has_more:
+                  type: boolean
+  post:
+    tags:
+      - "Campaigns"
+    summary: "Create Campaign"
+    operationId: createCampaigns
+    parameters:
+      - name: team_id
+        in: path
+        required: true
+        schema:
+          type: string
+    responses:
+      "404":
+        description: "Not Found"
+      "201":
+        description: "Created"
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Campaign::Parameters"
+/campaigns/{id}:
+  get:
+    tags:
+      - "Campaigns"
+    summary: "Fetch Campaign"
+    operationId: getCampaigns
+    parameters:
+      - $ref: "#/components/parameters/id"
+    responses:
+      "404":
+        description: "Not Found"
+      "200":
+        description: "OK"
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Campaign::Attributes"
+  put:
+    tags:
+      - "Campaigns"
+    summary: "Update Campaign"
+    operationId: updateCampaigns
+    parameters:
+      - $ref: "#/components/parameters/id"
+    responses:
+      "404":
+        description: "Not Found"
+      "200":
+        description: "OK"
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Campaign::Parameters"
+  delete:
+    tags:
+      - "Campaigns"
+    summary: "Remove Campaign"
+    operationId: removeCampaigns
+    parameters:
+      - $ref: "#/components/parameters/id"
+    responses:
+      "404":
+        description: "Not Found"
+      "200":
+        description: "OK"

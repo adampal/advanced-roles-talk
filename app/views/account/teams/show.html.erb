@@ -8,6 +8,9 @@
   <% end %>
 
   <% p.content_for :body do %>
+    <%= render 'account/campaigns/index', campaigns: @team.campaigns, hide_back: true %>
+    <%= render 'account/payments/index', payments: @team.payments, hide_back: true if can? :read, @team.payments.new %>
+    <%= render 'account/clients/index', clients: @team.clients, hide_back: true %>
     <%# 🚅 super scaffolding will insert new children above this line. %>
 
     <% unless scaffolding_things_disabled? %>

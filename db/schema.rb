@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_05_171758) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_06_224701) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -59,6 +59,34 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_05_171758) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "campaigns", force: :cascade do |t|
+    t.bigint "team_id", null: false
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["team_id"], name: "index_campaigns_on_team_id"
+  end
+
+  create_table "campaigns_collaborators", force: :cascade do |t|
+    t.bigint "campaign_id", null: false
+    t.bigint "user_id"
+    t.jsonb "role_ids"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["campaign_id"], name: "index_campaigns_collaborators_on_campaign_id"
+    t.index ["user_id"], name: "index_campaigns_collaborators_on_user_id"
+  end
+
+  create_table "clients", force: :cascade do |t|
+    t.bigint "team_id", null: false
+    t.bigint "client_team_id"
+    t.jsonb "role_ids"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["client_team_id"], name: "index_clients_on_client_team_id"
+    t.index ["team_id"], name: "index_clients_on_team_id"
   end
 
   create_table "integrations_stripe_installations", force: :cascade do |t|
@@ -172,6 +200,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_05_171758) do
     t.datetime "updated_at", precision: nil, null: false
     t.index ["uid"], name: "index_oauth_stripe_accounts_on_uid", unique: true
     t.index ["user_id"], name: "index_oauth_stripe_accounts_on_user_id"
+  end
+
+  create_table "payments", force: :cascade do |t|
+    t.bigint "team_id", null: false
+    t.string "name"
+    t.float "amount"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["team_id"], name: "index_payments_on_team_id"
   end
 
   create_table "scaffolding_absolutely_abstract_creative_concepts", force: :cascade do |t|
@@ -334,6 +371,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_05_171758) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "campaigns", "teams"
+  add_foreign_key "campaigns_collaborators", "campaigns"
+  add_foreign_key "campaigns_collaborators", "users"
+  add_foreign_key "clients", "teams"
+  add_foreign_key "clients", "teams", column: "client_team_id"
   add_foreign_key "integrations_stripe_installations", "oauth_stripe_accounts"
   add_foreign_key "integrations_stripe_installations", "teams"
   add_foreign_key "invitations", "teams"
@@ -349,6 +391,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_05_171758) do
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_applications", "teams"
   add_foreign_key "oauth_stripe_accounts", "users"
+  add_foreign_key "payments", "teams"
   add_foreign_key "scaffolding_absolutely_abstract_creative_concepts", "teams"
   add_foreign_key "scaffolding_absolutely_abstract_creative_concepts_collaborators", "memberships"
   add_foreign_key "scaffolding_absolutely_abstract_creative_concepts_collaborators", "scaffolding_absolutely_abstract_creative_concepts", column: "creative_concept_id"

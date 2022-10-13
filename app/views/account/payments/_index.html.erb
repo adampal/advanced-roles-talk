@@ -1,0 +1,83 @@
+<% team = @team || @team %>
+<% context ||= team %>
+<% collection ||= :payments %>
+<% hide_actions ||= false %>
+<% hide_back ||= false %>
+
+<% payments = payments.order(:id) unless has_order?(payments) %>
+<% pagy, payments = pagy(payments, page_param: :payments_page) %>
+
+<%= action_model_select_controller do %>
+  <%= updates_for context, collection do %>
+    <%= render 'account/shared/box', pagy: pagy do |p| %>
+      <% p.content_for :title, t(".contexts.#{context.class.name.underscore}.header") %>
+      <% p.content_for :description do %>
+        <%= t(".contexts.#{context.class.name.underscore}.description#{"_empty" unless payments.any?}") %>
+        <%= render "shared/limits/index", model: payments.model %>
+      <% end %>
+
+      <% p.content_for :table do %>
+        <% if payments.any? %>
+          <table class="table">
+            <thead>
+              <tr>
+                <%= render "shared/tables/select_all" %>
+                <th><%= t('.fields.name.heading') %></th>
+                <th><%= t('.fields.amount.heading') %></th>
+                <%# 🚅 super scaffolding will insert new field headers above this line. %>
+                <th><%= t('.fields.created_at.heading') %></th>
+                <th class="text-right"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% payments.each do |payment| %>
+                <% with_attribute_settings object: payment do %>
+                  <tr data-id="<%= payment.id %>">
+                    <%= render "shared/tables/checkbox", object: payment %>
+                    <td><%= render 'shared/attributes/text', attribute: :name, url: [:account, payment] %></td>
+                    <td><%= render 'shared/attributes/text', attribute: :amount %></td>
+                    <%# 🚅 super scaffolding will insert new fields above this line. %>
+                    <td><%= render 'shared/attributes/date_and_time', attribute: :created_at %></td>
+                    <td class="buttons">
+                      <% unless hide_actions %>
+                        <% if can? :edit, payment %>
+                          <%= link_to t('.buttons.shorthand.edit'), [:edit, :account, payment], class: 'button-secondary button-smaller' %>
+                        <% end %>
+                        <% if can? :destroy, payment %>
+                          <%= button_to t('.buttons.shorthand.destroy'), [:account, payment], method: :delete, data: { confirm: t('.buttons.confirmations.destroy', model_locales(payment)) }, class: 'button-secondary button-smaller' %>
+                        <% end %>
+                        <%# 🚅 super scaffolding will insert new action model buttons above this line. %>
+                      <% end %>
+                    </td>
+                  </tr>
+                <% end %>
+              <% end %>
+            </tbody>
+          </table>
+        <% end %>
+      <% end %>
+
+      <% p.content_for :actions do %>
+        <% unless hide_actions %>
+          <% if context == team %>
+            <% if can? :create, Payment.new(team: team) %>
+              <%= link_to t('.buttons.new'), [:new, :account, team, :payment], class: "#{first_button_primary(:payment)} new" %>
+            <% end %>
+          <% end %>
+
+          <%# 🚅 super scaffolding will insert new targets one parent action model buttons above this line. %>
+          <%# 🚅 super scaffolding will insert new bulk action model buttons above this line. %>
+          <%= render "shared/bulk_action_select" %>
+
+          <% unless hide_back %>
+            <%= link_to t('global.buttons.back'), [:account, context], class: "#{first_button_primary(:payment)} back" %>
+          <% end %>
+        <% end %>
+      <% end %>
+
+      <% p.content_for :raw_footer do %>
+        <%# 🚅 super scaffolding will insert new action model index views above this line. %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

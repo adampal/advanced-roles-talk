@@ -1,0 +1,8 @@
+<% collaborator ||= @collaborator %>
+<% campaign ||= @campaign || collaborator&.campaign %>
+<%= render 'account/campaigns/breadcrumbs', campaign: campaign %>
+<%= render 'account/shared/breadcrumb', label: t('.label'), url: [:account, campaign, :collaborators] %>
+<% if collaborator&.persisted? %>
+  <%= render 'account/shared/breadcrumb', label: collaborator.label_string, url: [:account, collaborator] %>
+<% end %>
+<%= render 'account/shared/breadcrumbs/actions', only_for: 'campaigns/collaborators' %>

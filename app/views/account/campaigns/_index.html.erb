@@ -1,0 +1,81 @@
+<% team = @team || @team %>
+<% context ||= team %>
+<% collection ||= :campaigns %>
+<% hide_actions ||= false %>
+<% hide_back ||= false %>
+
+<% campaigns = campaigns.order(:id) unless has_order?(campaigns) %>
+<% pagy, campaigns = pagy(campaigns, page_param: :campaigns_page) %>
+
+<%= action_model_select_controller do %>
+  <%= updates_for context, collection do %>
+    <%= render 'account/shared/box', pagy: pagy do |p| %>
+      <% p.content_for :title, t(".contexts.#{context.class.name.underscore}.header") %>
+      <% p.content_for :description do %>
+        <%= t(".contexts.#{context.class.name.underscore}.description#{"_empty" unless campaigns.any?}") %>
+        <%= render "shared/limits/index", model: campaigns.model %>
+      <% end %>
+
+      <% p.content_for :table do %>
+        <% if campaigns.any? %>
+          <table class="table">
+            <thead>
+              <tr>
+                <%= render "shared/tables/select_all" %>
+                <th><%= t('.fields.name.heading') %></th>
+                <%# 🚅 super scaffolding will insert new field headers above this line. %>
+                <th><%= t('.fields.created_at.heading') %></th>
+                <th class="text-right"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% campaigns.each do |campaign| %>
+                <% with_attribute_settings object: campaign do %>
+                  <tr data-id="<%= campaign.id %>">
+                    <%= render "shared/tables/checkbox", object: campaign %>
+                    <td><%= render 'shared/attributes/text', attribute: :name, url: [:account, campaign] %></td>
+                    <%# 🚅 super scaffolding will insert new fields above this line. %>
+                    <td><%= render 'shared/attributes/date_and_time', attribute: :created_at %></td>
+                    <td class="buttons">
+                      <% unless hide_actions %>
+                        <% if can? :edit, campaign %>
+                          <%= link_to t('.buttons.shorthand.edit'), [:edit, :account, campaign], class: 'button-secondary button-smaller' %>
+                        <% end %>
+                        <% if can? :destroy, campaign %>
+                          <%= button_to t('.buttons.shorthand.destroy'), [:account, campaign], method: :delete, data: { confirm: t('.buttons.confirmations.destroy', model_locales(campaign)) }, class: 'button-secondary button-smaller' %>
+                        <% end %>
+                        <%# 🚅 super scaffolding will insert new action model buttons above this line. %>
+                      <% end %>
+                    </td>
+                  </tr>
+                <% end %>
+              <% end %>
+            </tbody>
+          </table>
+        <% end %>
+      <% end %>
+
+      <% p.content_for :actions do %>
+        <% unless hide_actions %>
+          <% if context == team %>
+            <% if can? :create, Campaign.new(team: team) %>
+              <%= link_to t('.buttons.new'), [:new, :account, team, :campaign], class: "#{first_button_primary(:campaign)} new" %>
+            <% end %>
+          <% end %>
+
+          <%# 🚅 super scaffolding will insert new targets one parent action model buttons above this line. %>
+          <%# 🚅 super scaffolding will insert new bulk action model buttons above this line. %>
+          <%= render "shared/bulk_action_select" %>
+
+          <% unless hide_back %>
+            <%= link_to t('global.buttons.back'), [:account, context], class: "#{first_button_primary(:campaign)} back" %>
+          <% end %>
+        <% end %>
+      <% end %>
+
+      <% p.content_for :raw_footer do %>
+        <%# 🚅 super scaffolding will insert new action model index views above this line. %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

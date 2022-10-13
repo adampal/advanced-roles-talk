@@ -1,0 +1,10 @@
+<% if can? :read, Campaigns::Collaborator.new(team: current_team) %>
+  <%= render 'account/shared/menu/item', {
+    url: main_app.polymorphic_path([:account, current_team, :campaigns_collaborators]),
+    label: t('campaigns/collaborators.navigation.label'),
+  } do |p| %>
+    <% p.content_for :icon do %>
+      <i class="<%= t('campaigns/collaborators.navigation.icon') %>"></i>
+    <% end %>
+  <% end %>
+<% end %>

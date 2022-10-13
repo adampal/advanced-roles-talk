@@ -1,0 +1,93 @@
+/teams/{team_id}/clients:
+  get:
+    tags:
+      - "Clients"
+    summary: "List Clients"
+    operationId: listClients
+    parameters:
+      - name: team_id
+        in: path
+        required: true
+        schema:
+          type: string
+    responses:
+      "404":
+        description: "Not Found"
+      "200":
+        description: "OK"
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: array
+                  items: 
+                    $ref: "#/components/schemas/Client::Attributes"
+                has_more:
+                  type: boolean
+  post:
+    tags:
+      - "Clients"
+    summary: "Create Client"
+    operationId: createClients
+    parameters:
+      - name: team_id
+        in: path
+        required: true
+        schema:
+          type: string
+    responses:
+      "404":
+        description: "Not Found"
+      "201":
+        description: "Created"
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Client::Parameters"
+/clients/{id}:
+  get:
+    tags:
+      - "Clients"
+    summary: "Fetch Client"
+    operationId: getClients
+    parameters:
+      - $ref: "#/components/parameters/id"
+    responses:
+      "404":
+        description: "Not Found"
+      "200":
+        description: "OK"
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Client::Attributes"
+  put:
+    tags:
+      - "Clients"
+    summary: "Update Client"
+    operationId: updateClients
+    parameters:
+      - $ref: "#/components/parameters/id"
+    responses:
+      "404":
+        description: "Not Found"
+      "200":
+        description: "OK"
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Client::Parameters"
+  delete:
+    tags:
+      - "Clients"
+    summary: "Remove Client"
+    operationId: removeClients
+    parameters:
+      - $ref: "#/components/parameters/id"
+    responses:
+      "404":
+        description: "Not Found"
+      "200":
+        description: "OK"

@@ -3,6 +3,9 @@
     <%= render 'account/teams/menu_item' %>
     <%= render 'account/scaffolding/absolutely_abstract/creative_concepts/menu_item' unless scaffolding_things_disabled? %>
     <% # added by super scaffolding. %>
+    <%= render 'account/clients/menu_item' %>
+    <%= render 'account/payments/menu_item' %>
+    <%= render 'account/campaigns/menu_item' %>
   <% end %>
 
   <% integrations = capture do %>

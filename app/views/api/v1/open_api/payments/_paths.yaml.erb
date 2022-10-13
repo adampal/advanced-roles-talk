@@ -1,0 +1,93 @@
+/teams/{team_id}/payments:
+  get:
+    tags:
+      - "Payments"
+    summary: "List Payments"
+    operationId: listPayments
+    parameters:
+      - name: team_id
+        in: path
+        required: true
+        schema:
+          type: string
+    responses:
+      "404":
+        description: "Not Found"
+      "200":
+        description: "OK"
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: array
+                  items: 
+                    $ref: "#/components/schemas/Payment::Attributes"
+                has_more:
+                  type: boolean
+  post:
+    tags:
+      - "Payments"
+    summary: "Create Payment"
+    operationId: createPayments
+    parameters:
+      - name: team_id
+        in: path
+        required: true
+        schema:
+          type: string
+    responses:
+      "404":
+        description: "Not Found"
+      "201":
+        description: "Created"
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Payment::Parameters"
+/payments/{id}:
+  get:
+    tags:
+      - "Payments"
+    summary: "Fetch Payment"
+    operationId: getPayments
+    parameters:
+      - $ref: "#/components/parameters/id"
+    responses:
+      "404":
+        description: "Not Found"
+      "200":
+        description: "OK"
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Payment::Attributes"
+  put:
+    tags:
+      - "Payments"
+    summary: "Update Payment"
+    operationId: updatePayments
+    parameters:
+      - $ref: "#/components/parameters/id"
+    responses:
+      "404":
+        description: "Not Found"
+      "200":
+        description: "OK"
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Payment::Parameters"
+  delete:
+    tags:
+      - "Payments"
+    summary: "Remove Payment"
+    operationId: removePayments
+    parameters:
+      - $ref: "#/components/parameters/id"
+    responses:
+      "404":
+        description: "Not Found"
+      "200":
+        description: "OK"

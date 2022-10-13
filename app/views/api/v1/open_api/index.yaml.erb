@@ -14,6 +14,10 @@ components:
     <%= components_for Team %>
     <%= components_for User %>
     <%= components_for Scaffolding::CompletelyConcrete::TangibleThing unless scaffolding_things_disabled? %>
+    <%= components_for Campaign %>
+    <%= components_for Payment %>
+    <%= components_for Campaigns::Collaborator %>
+    <%= components_for Client %>
     <%# 🚅 super scaffolding will insert new components above this line. %>
   parameters:
     id:
@@ -26,5 +30,8 @@ paths:
   <%= paths_for Team %>
   <%= paths_for User %>
   <%= paths_for Scaffolding::CompletelyConcrete::TangibleThing unless scaffolding_things_disabled? %>
+  <%= paths_for Campaign %>
+  <%= paths_for Payment %>
+  <%= paths_for Campaigns::Collaborator %>
+  <%= paths_for Client %>
   <%# 🚅 super scaffolding will insert new paths above this line. %>
-  

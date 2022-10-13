@@ -1,0 +1,110 @@
+en:
+  campaigns/collaborators: &collaborators
+    label: &label Collaborators
+    breadcrumbs:
+      label: *label
+    navigation:
+      label: *label
+      icon: fal fa-puzzle-piece
+    buttons: &buttons
+      new: Add New Collaborator
+      create: Create Collaborator
+      edit: Edit Collaborator
+      update: Update Collaborator
+      destroy: Remove Collaborator
+      shorthand:
+        edit: Edit
+        destroy: Delete
+      confirmations:
+        # TODO customize for your use-case.
+        destroy: Are you sure you want to remove %{collaborator_name}? This will also remove any child resources and can't be undone.
+    fields: &fields
+      id:
+        heading: Collaborator ID
+      campaign_id:
+        heading: Campaign ID
+      campaign_id: &campaign
+        _: &campaign_id Campaign
+        label: *campaign_id
+        heading: *campaign_id
+        placeholder: Select
+      campaign: *campaign
+      user_id: &user
+        _: &user_id User
+        label: *user_id
+        heading: *user_id
+        placeholder: None
+      user: *user
+      role_ids:
+        _: &role_ids Roles
+        label: *role_ids
+        heading: *role_ids
+        placeholder: None
+        options:
+          admin: Campaign Manager
+          one: One
+          two: Two
+          three: Three
+      # 🚅 super scaffolding will insert new fields above this line.
+      created_at:
+        _: &created_at Added
+        label: *created_at
+        heading: *created_at
+      updated_at:
+        _: &updated_at Updated
+        label: *updated_at
+        heading: *updated_at
+    api:
+      collection_actions: "Collection Actions for Collaborators"
+      index: "List Collaborators"
+      create: "Add a New Collaborator"
+      member_actions: "Actions for an Individual Collaborator"
+      show: "Retrieve a Collaborator"
+      update: "Update a Collaborator"
+      destroy: "Delete a Collaborator"
+      fields: *fields
+    index:
+      section: "%{campaigns_possessive} Collaborators"
+      contexts:
+        campaign:
+          header: Collaborators
+          description: Below is a list of Collaborators that have been added for %{campaign_name}.
+          description_empty: No Collaborators have been added for %{campaign_name}.
+      fields: *fields
+      buttons: *buttons
+    show:
+      section: "%{collaborator_name}"
+      header: Collaborator Details
+      description: Below are the details we have for %{collaborator_name}.
+      manage_description: You'll also find options for updating these details or removing %{collaborator_name} from %{campaign_name} entirely.
+      fields: *fields
+      buttons: *buttons
+    form: &form
+      buttons: *buttons
+      fields: *fields
+    new:
+      section: "New Collaborator for %{campaign_name}"
+      header: New Collaborator Details
+      description: Please provide the details of the new Collaborator you'd like to add to %{campaign_name}.
+      form: *form
+    edit:
+      section: "%{collaborator_name}"
+      header: Edit Collaborator Details
+      description: You can update the details or settings for %{collaborator_name} below.
+      form: *form
+    notifications:
+      created: Collaborator was successfully created.
+      updated: Collaborator was successfully updated.
+      destroyed: Collaborator was successfully destroyed.
+  account:
+    campaigns:
+      collaborators: *collaborators
+  activerecord:
+    attributes:
+      campaigns/collaborator:
+        campaign_id: *campaign_id
+        user_id: *user_id
+        role_ids: *role_ids
+        # 🚅 super scaffolding will insert new activerecord attributes above this line.
+        created_at: *created_at
+        updated_at: *updated_at

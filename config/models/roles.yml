@@ -1,5 +1,8 @@
 default:
   models:
+    Client: read
+    Campaigns::Collaborator: read
+    Campaign: read
     Team: read
     Membership:
       - read
@@ -23,6 +26,10 @@ admin:
     - admin
     - editor
   models:
+    Client: manage
+    Campaigns::Collaborator: manage
+    Payment: manage
+    Campaign: manage
     Team: manage
     Membership: manage
     Scaffolding::AbsolutelyAbstract::CreativeConcept: manage

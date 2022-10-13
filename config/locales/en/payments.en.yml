@@ -1,0 +1,94 @@
+en:
+  payments: &payments
+    label: &label Payments
+    breadcrumbs:
+      label: *label
+    navigation:
+      label: *label
+      icon: fal fa-puzzle-piece ti ti-gift
+    buttons: &buttons
+      new: Add New Payment
+      create: Create Payment
+      edit: Edit Payment
+      update: Update Payment
+      destroy: Remove Payment
+      shorthand:
+        edit: Edit
+        destroy: Delete
+      confirmations:
+        # TODO customize for your use-case.
+        destroy: Are you sure you want to remove %{payment_name}? This will also remove any child resources and can't be undone.
+    fields: &fields
+      id:
+        heading: Payment ID
+      team_id:
+        heading: Team ID
+      name:
+        _: &name Name
+        label: *name
+        heading: *name
+      amount:
+        _: &amount Amount
+        label: *amount
+        heading: *amount
+      # 🚅 super scaffolding will insert new fields above this line.
+      created_at:
+        _: &created_at Added
+        label: *created_at
+        heading: *created_at
+      updated_at:
+        _: &updated_at Updated
+        label: *updated_at
+        heading: *updated_at
+    api:
+      collection_actions: "Collection Actions for Payments"
+      index: "List Payments"
+      create: "Add a New Payment"
+      member_actions: "Actions for an Individual Payment"
+      show: "Retrieve a Payment"
+      update: "Update a Payment"
+      destroy: "Delete a Payment"
+      fields: *fields
+    index:
+      section: "%{teams_possessive} Payments"
+      contexts:
+        team:
+          header: Payments
+          description: Below is a list of Payments that have been added for %{team_name}.
+          description_empty: No Payments have been added for %{team_name}.
+      fields: *fields
+      buttons: *buttons
+    show:
+      section: "%{payment_name}"
+      header: Payment Details
+      description: Below are the details we have for %{payment_name}.
+      manage_description: You'll also find options for updating these details or removing %{payment_name} from %{team_name} entirely.
+      fields: *fields
+      buttons: *buttons
+    form: &form
+      buttons: *buttons
+      fields: *fields
+    new:
+      section: "New Payment for %{team_name}"
+      header: New Payment Details
+      description: Please provide the details of the new Payment you'd like to add to %{team_name}.
+      form: *form
+    edit:
+      section: "%{payment_name}"
+      header: Edit Payment Details
+      description: You can update the details or settings for %{payment_name} below.
+      form: *form
+    notifications:
+      created: Payment was successfully created.
+      updated: Payment was successfully updated.
+      destroyed: Payment was successfully destroyed.
+  account:
+    payments: *payments
+  activerecord:
+    attributes:
+      payment:
+        name: *name
+        amount: *amount
+        # 🚅 super scaffolding will insert new activerecord attributes above this line.
+        created_at: *created_at
+        updated_at: *updated_at

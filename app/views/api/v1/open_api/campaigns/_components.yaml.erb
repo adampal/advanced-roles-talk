@@ -1,0 +1,15 @@
+Campaign::Attributes:
+  type: object
+  properties:
+    <%= attribute :id %>
+    <%= attribute :team_id %>
+    <%= attribute :name %>
+    <%# 🚅 super scaffolding will insert new attributes above this line. %>
+    <%= attribute :created_at %>
+    <%= attribute :updated_at %>
+
+Campaign::Parameters:
+  type: object
+  properties:
+    <%= parameter :name %>
+    <%# 🚅 super scaffolding will insert new parameter above this line. %>

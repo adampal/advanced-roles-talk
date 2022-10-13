@@ -4,6 +4,8 @@ class User < ApplicationRecord
 
   # 🚅 add belongs_to associations above.
 
+  has_many :campaigns_collaborators, class_name: "Campaigns::Collaborator"
+  has_many :clients, through: :teams
   # 🚅 add has_many associations above.
 
   # 🚅 add oauth providers above.
